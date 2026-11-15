@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0b0d12">
+  <meta name="color-scheme" content="dark">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="PosCalc">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="description" content="Stock position-size calculator with 3:1 reward-to-risk, 2% risk, and a 25% position cap.">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAYAAAA9zQYyAAAc3klEQVR42u2deXRV1b3Hv/ucO4ASrCEBgSJ0VY1FKzKI2AKKzIMLFbAir/CqUJ/a4fUpKiAUFVtX21dLbEux4iwVRaAoEAxLHwuqoukrYniCExoLIlOghDAk9+z3x5n23mfIueFmOMnv2165ucm9Z997P+d3fvs37M3OzMvnIJFaiDT6CEgENIlEQJNIBDSJRECTCGgSiYAmkQhoEomAJpEIaBIBTSIR0CQSAU0iEdAkEgFNIqBJJAKaRCKgSSQCmkQioEkENIlEQJNIBDSJRECTSAQ0iYAmkQhoEomAJpEIaBKJgCYR0CQSAU0iEdAkEgFNIhHQJAKaRCKgSSQCmkQioEmtW4nW9Xa59I/4KFP/lHnukAjo5gEw55FR93mAu1izXALOg86v0xbz/MAI6LiDzHkIsh6QXBvNAsjgYNYTuMVIPSHhPABgnjOcuedlG+qkJKAbGWTRCnIPWL7WXISV+xs6E+5swQ4bWy6BNk9OFumkbHlwtxygJcvHrf+7lun8887Dpb17o3fv3ujZsyfOPvtsnHXWWTjrrLPQtm1bnDx5EsePH8fRf/0LX/zzn/jiiy/wwQcf4N1338X727bhVE2NTTsY4zLYEcDg3H9skfyh+pzY9skWelJa9rwFgc3iv3k9D4SlW7duuOmmmzBlyhR07ty53keoqqpCSck6vPTScrzx+uvOaSKCHAq1c7KZY92/f18DndMcx48fR3V1NSorK/HZrl34dNculJWV4c2//Q379u1zrigMTAL5tNwoArphYObWD106d8ZDv/gFxowZA03LbWRye3k5fvnww1hfUgIwJoERBIU9LhNsjv379zfJp7V161YsXboULy9fjn8dPWqdiMyx3y0B6hgDLcBsgcIA/ODmH2Du3Hlo165dgx591apVuOfuu3GosrIOqO1xWicc59h/4ECTfnJHjhxBcXExHlu8GCdOnvRa6xhDHVOgvTC3Safxp8WLMXbs2EYbxccff4yJEydi9+7dMtSSs2q5G9Y4Oec40MRA2/rkk08wffp0lJeXCyDHG+pYZgpVmFPJJJ5furRRYQaA8847D6tXr0Z+fr7pt0vzPO6NrVgWurnom9/8JtavX4/x48ebnyXnQINOVgnoMJotiDgWLlyIwYMHN8lwzj33XDz22GNgDr5CMocrUYdmqFQqhcWLF+Pa664V/H2e41AiAR0ejhL80Rsn34iJkyY16aiuvPJKXD9hgmXlXBC4MvbmKl3X8eijv0fPnj2locbRSMfLh1b80fbt2+Odd95Bhw4dmnxoFRUV6NevHzjnki8K5QTk3MCBg4ea5ce7c+dODB48GIZhOO8hbpGPWFloLlppzjFj+vSsYT58+DCeeGIJptw0GX16X4ru53ZDYUEHfKNHd1zevz9u/eEMlJSsg2EYWbsegwcNsvzkeF6ui4qKMGXKFOlKE7d3ESMLLYe/NMaw9b33skqYrFq5EnfddScqKyvtt+/+I7oKnGPAgAF48smn0OmccyK//lNPPomZM2ea8WnJStffQhcVnY/9+/ZJY2U+CZxkKoX2eXno3LkzLr74YowaNRojRo5EOp3O6lP+/LPP0LdfPzDhPbAYZRJjWw99Wf/+WcG8fPlLuGX6LSbMjIExzfzSNCb8az3GNGzZsgXf+94NOHXqVORj9OnbRynSO31bYcLLnHExpjknjHirqanBwUOHUF6+HS+88AKm/fs09OvbByUl67I6XvcePXBZv37ClSZevnR8gFY+1GyiGvv37cN//exnJiAOtDIk9uNw/mV4//338eyzz2RhTS/0gZifPtLWeMQxQ7nJ78u8v2fPHvzblCn4y1+WZnXEYcOHC85dvJyO2FroSy65JPLfPv3006iurlaAsL544X+Oq2CntMGwcsWKyMdJp9Nok24TUiJaD5wZPDAzHwsd9DvOOe66807s3r078jF79erlM/54gB2fajsmf6br16/HP/7xv0IVJg984qqVK00rZhGipnqlQ3C7SM18vR07dmQ1TLtyL7dvXTjhnLEH/zUHB+MAt/70xIkTePaZZ3DvrFmRjnf++efDqRHniFUhXizLRxkYnnvuOSd8B58ZOXNnUCYOTE3pMp/zxCwN5dz1Xo8dOxZ5XJlMBkeOHMnxm7WotCeZdU3QmPuebKgBYNPmTbgX0YD+2te+5gU5JmAn4oWxVYLEOBhnlgWyc3Teub8YQ/Uvl5Qts98FIT8/P/IIv/rqKyeGy3L83t23ElSuyoWrFXNLoa2a56/27o18tDPPPNOdDcaspiNeFtoxpxbUYCaIIVdh+RLNfN1CHvgYR99+/SIPb/PmzYI1bcCPwddK21cjuTPG/MhYVmM6ceJEXKdWcXM5ZJfA/HLruhayKEETSM0BQj3D1KnTIo/ODJGxcOe/idSlS5fIf9tcqgFbiQ9tB/ptAOtrDbnCslyED85x23/chmHDhkV6tQ8//BBrXl2jXAwaxlKbngAPcTm8V5qrrrwq8uvv3LlTvBQQ0I3mfzjeBK+TXe7jU0jTSKFO5IILzsfd99yDa6+9LtJIDMPArFn3ImNknFBgjhE2oxcCyDw0ccOlK027vDx8f+rUyEd766033XOFhV7oCOiGc64R8uW697t26YqrhsjWStM05OXl4Rs9eqDfZZfhoosuyuro98+fj43/s9G1aLm0zmJtCIMVi+N1nLzcudLomobi4mIUFhZGPBzH2jVrEdem2Va0cpIJRs+LeuKRRx7JySvW1tZizpzZePzxx91kRgOA4HSv22E4XscJYD2na5cueOR3v8PVVw+NfKwNGzbg008/9elYYQR080M6dx0j5eXluHvmXdiy5R0ZZCU0eLpHM70G7rsojnqVadfuTHQs7IhLevXCyJEjMW7cuKyKkzKZDBYseNCJ1Dh1JGShm5dh9k6S6q+ysjI8sWQJXnxxmVlBJyQ+xK8+VxDssCdojaDihQuxvXy7a51j5j8DrWj1US5cjuurvV9+iaXPP4d169Y69dLeBcQEGGIEQmlpKX758C891jluRGutAuQcVY2d07kzfvvI77Dzw4/wp8WL0a1bt+BLQowK1dasWYNpU6fCyBiK6xS/yB2tD10PpVIp3HDD97DlnXcxa/Zs6Lrmxq+RG9emMXTixHHMn/9zTJv6fZw6ddJyn+JrnVsF0G4lB8u5uUmn07jzzruwdOlfkNe+vejbNGuoq6ur8eQTS3B5//4oXrjQ6vT2LvAYx8AdWegcaOjQoVixYgXSqZS0PkdzVXl5OY5WVaFr167hVjiGRLeAxRrr9qKlpbgAt7/Pgk/XzcRKfn4+Lrr4YgwYMADXXz8BHTt2zOpIy5Ytw4/uuEPoKRRG0Uy7vnfs2IG7Z87Em2++KXXGxK2XsBUBLSyWKEAdWEtt/V7Xddx88y2YPWcO2tvuRARNnjwZGzZsEIBwx2BC3fyWMeCcY/78+fjDH/7gxtRZPBdvbBVAq4kJqQ7CZ11p8W+KioqwctUqdOoUrfv7vffew9ChQwUw4KSjmyvQtm699VasePllq0cRsbTSLQRoHuIA+u2zwmV+A4qU7MziFVdcgVdeXRN5AcNRo0bi72V/l5It9QU66jIGAJBIJpDXLg/du3dH3759cePkm9CnT5/IxzpwYD8uu6w/qqqqaKGZRgfYuoRza1EU780GCE5dj5zHs/1FyHUYSpMpGMNbb72FkpKSyKMbctUQ8XpwWsu1RF3GAIyhtjaDysrD2Lp1K5YsWYJhQ6/GnNmzIh+roKAQk2+8MdpCMyzijYCO4D54ykGDbupPbkOJsHCsArjckGoD9eorqyMPceCggTkMdGSzjIHmrC9i//2iRYuwePGfIh/tmmuu8Qk6ci/Izs8s+IbGhzteS4FxLmMqWWnvTVkCFG6ji/uhu5B4G2vdLwf4IIvub7M7JDeFUNktY+D/+9/8+teoqamJdLw+fftC05RNk7gCpf3ZacIVThNu9uepBcDdgErEyTLbn27vS3ujT98+PpM6xYNmDDt37sTmTZtdkAM7tiyQuduI6+ynA4aDWbQldehQkNMu6ayWMeBuyTRnDAwGDh06hC1btmDgwIF1HiudTqPb17uhoqLCAZEzCEtAKJc5JZrjflXChkr2Z2r/sgG70mICNJdai7478LuYN29epGdu3LgRmzZtArO+ZQ4GFtbNHPBhp9NtIo+2bdu2OZy2n84yBhzcep8ffPB/kYAGzM2WKioqwBl3rhBOopW5cw83VS4PiTlNBsxxERkXwG5AqGNWPmpOsI4cPhz5Gd/+9reR0HXUZjLRofbRBUUXRP7bbMYX1Ua7wYawXbeENUWUZQz27N4T+WiFhQWyVbZcCmeZNM1a30QTFqVksolm1sQchuUaGvYCCw0LtRYTjiV9XlER+an5+fm4asgQ30SK7GdzYXYPT5PpuLHjIh/z4KGGjTMHx4a9l3/bZTqcxUnWoaBQirFIPrPOoOk6WEKHZt+S6i0BltCgJTSwhAamaWA6c3xqJi71wFoj0ArY27dvz+pp9957j7m9mwK1M73k4mKbXIpBg3NceOG3MGHixMjH27ZtW45tc7RHJQiVgix3CeFoFto5cZzJngVnwoLZAldL2bck9FTSfMyBWgfTdQdqaJo/1K09Dr1//z589NFHkf++V69L8dAvHhIiJUIUxGOhudRk2r1Hd7z40ktIJpORj1dWVta0yTWfju3KLCx0QWGh41I4QCc0aLpshR2Q00no6QS0dAJ6Omk+nky4cOsamG7BrEY+cmylY1ttt3r1X7P6++nTZ+CZZ57B17t2BeeGUyhkwy2BbPkdkybdgLVr12W1SEsmk8GaV19xQ4NNSrT785Ej0YEuLCg0/WTHMgsuhgWyCbF4S0FPp6BZP2tpC2j7uTbUzLbSaBArHY9JIRNiodakZ+nzz+OnP/1PJBLR38LoMWMwdNgwvPbaepSsK8G2bduw58s9qKqqwhlnnIH8/A7ofu65GDx4MEaNHo2ioqKsh1paWoq9e79SFoVs+uqCbFyOgsICMzljW+aEBpZ0gWYKpENf8GYjSycsgKHVwjDnkDCs6Ac0O67IrA52ntOPKTa1HM52Y9y1osXFxbhpypRmM8ZMJoOrrx6C7du3m0AIHm19azl6futC7Nt/QNkigmX1eXHO0e7MM/DZ59Em07t27cKAgVeYAAvug55KQEsmoSVtoHUMeW5m8Mk9cQGMmloYp2ph1GTM+zUZ8Izh3MQISC6Ajo3L4ZnoMOD+Bx7AwYMHm80YH//zn82uaagrnja9qqqqImcLCwoKAJ0BzgTQhFlPWa6E5VaEwQwAw5ffZ0ZEdN10XYRJobSoZQ7djvj40MpEh1nZuztuvz3rHasaQm+//Tbm3z9f7pr2jLlpjUHU+HheXh7atG1jheUsC51KgllQ66kkrnrqzkivNXzFXCdkJ6XFG6hnMUaTQp9wFGPYsKEUd8+8Syjib3yVl5dj2rSpqDlV47PgzOmvQMRyRPXhbCaGnTqZ/nNSg5bSHajNf/XsDm3543Lxkpv8bL1hO+mkdqvQnnrqKdxxx+053woiit5443WMHTMGBw8c9OzP0jARi/q4aPbEMDrQHQsLrQhFwrLSQhIlkch6MI21/lLMwnaClRZcDzCGF5ctw+jRo/DRRx82ykiqq6sxa9a9mDRpEo4dOybDzIJHfnrvvB6vIlQXHj6cRaSjY0cn5uxEOKxEyXcfvS3LGX3jbeEZv6XAGHMq4ux6BbuybNt72zBo4CDMmDEDP/7Jj9GxY6ecH/748eN4+umn8ftHi/Hl3r3u/i3KZkRyv4wVk6rP5Ke+sVpNiBpYBUSHs9j/pbCw0LTMCR26NTkcuOhHZsYv+xCVz81T3dtKgbZnxfZaEkwOUdfW1uKPi/6IJUsex/hrr8XEiRMxaNBgpFKpeh/OMAy8/fbbWLniZaxatQqHKisdkL1lnUzZ24U722a45ajZX5OymkM5Vlk8F7Kr5ygoLHCSKd959Hbo6WS9PrvSCQtgZAzwjBmeczqM1EUHc4VGfHsKxb1EuLIuMtxtJTjQtm0bXH75APTu3RtFFxahR48e6NTpHJx99tlIp9NIJpM4deokqquP4+jRo9izZw8qKj7HJx9/grKyMpSVvYuqqmNC4T+kOglxG2S/wiFvpzl348TOWGVr6u2gEeYNkeYZ7lWBMYAzYTMaOxJjFehD16BZGUEtmYBuxZ2/s/A2JM5IQ2+TMh9L6GY9hvX8N3+yCN8pDnY/Nkx6CMapWmRO1Vox6IaPQ8e/SVbqYlHhcWF34Yn6yYk7BDAZtqCdtYKq4ISxOB3nnAcvICkdx+28Dm1Y9UyYBXdFLPm0YdbFCjrdqaLr//DNSLRJQW+Ttv41w3QsaSZSwBg23/576b0NWvwTf5hr5ISKUZMBr7WANgzTYhtCZw8BrQKjWOsA6KPyLF30GZPdAM8WcayOIXL/8QUAndUJI7VGwfXpNbgLx+hCTbNut01ZFXA6wxX//UO3XiOVdBMpKbceY9OMhVIzvV25yDk3ra1hmO5FrQFem4FRK2cHjdqM+TvDvMHgzvrXufI8Wsb60LZFc9qnhK9d2FFVXdqgTj9d9WV9toeLum6F4/aL4+PmL7j/eSQH4PyOozSrOsU+dgJDt2HWnEIj6Aya/ZhuFuwPXPRjgDGnNkNLyPXOG295xNoNg8knIXf9Yhgm1IZhAZ1xoXZgzhhmQZghTgpza09b1oLnzNycU9odS42icRdWb3ezEhYL+IHJ/4k+vbP765g8MBZyjvlaf0/XtetOOJ0kmluyyTQG6Do0jbllnLqGIc/O9Jyw9vM23vxbiH2WhrtijrurABe6URwXwpB8ZJ6xrHbGAtkQy3ZzPy9sgSv4K7tjqVu/ee6yqK9av82AWMDVRFjUkYtuuveA4VEMKFZZU4DWNdPyWjCb1lrDsGWzZWsrnBCvT/mVtV+42MHDFZBhluEagqU2DBluyVe2XAyDS69Fceh6w+3vQ/M6DTKr96ERBGdQ5izi98uUwh6nvlhzXQsTZvG+7ljrESvnBR5qw6SH3LVPuAig5VYI1Y7g8P+9YbsihnBf6C8UYaY49GkC7mulc38IXysacFDXnw5ISvi5HM6KSeIEz3UpmNMl4roeo165331JNV58/QMywIYPmIqr4bHahjtJhHoycDQ4zK0Q6IY/V+SwGZMv5yLYLMQycx7ss9RlmS3/WLNAhmWlbZjdELV7jPXj7zddAsd1kF0E83dCFze87oeT/YMIrwIyGhZmAjqXIKuRBtWKgikLtLhP5x6wecj6k2pozvabZaht6wzBMvudGCXj5nkndT5QS9ZVhVf0sX0fQ4NNAgnoBrHKAmSAu16FGgsWAA+cN6qgeDhkUqbPhVoIzQm1xyP9YJZA5k5c2ExPG/Ljjm8MKTrhgVeAlvOAq00jZDwI6Fy6Fx7IlMecaIS/924nX5gfBEyJkmhMWuxFBBkswCpbWjd2rhM3lkJtHldD8ZUV6+sMLwjgRgSZgM6lVZbiv8xtMPWxmNCCS0y9Vo8rQCvui3QlcO+PXD0/GOYxc91wWkaGGUo6mosLlnCuwFtHdq+J8s8E9OlaZb/4rzhBs1cNEiy13x4sUrEVD4krigVRPtGOEat+7u9ijJ0rx4Yz4n3LtcgIK7caXIE4BOBmVDyRaJHQ5cpq+MSSZffC9mXF+K89QRPiwBbso9c8aEUV5jsv6qbEuZwx5NzX4xCjJEyIeIxYOS/UKjt1Fhk5mwcxISKG2uyDqy5EM6/8iW9xEsvi9/x0j8OUVTgF39gnsiDFgsMiDZZeu/5B72B5+HhEjVgxNxjm0fe5llm0yKrP7BeGiwnE8QWahXy5ETqrgytHA+K+YuyYKdEKcc031Srrbsv+qFcfqNdbLZ24QBhb8Lsavvy+YJhH3ecAbDjVcBwQU9JqBk+a+MXQzjV7oJl//JQx5RIcYL3qtHwh5ZtOVEGEWRPLMZVUs10vocmZuVxow6SHpHcy/KU54RM/nyIhN6IRnMmLK8jNH2gWADFj/q6A7Gj6W1+/mKlPeEzyV1UXQ4n7QrDGToo5xCqXTnjQM77hL8/N2ce2bvR9wRO/oGRJzK1y8wY6rBZCtJSK9XSbSliggeY+cdRAj0NaKgG+8V6/ZEYYzK9d94DPMb1nUtgEL0xrR82xrLEYjrMscpCL0QKscvMEOqwWQlMu+4rllO6rXoMU1hX2J+Q82O1QThgxxgymSf6zDfqoNcEgrx8/X04H+7o8Sn00pK26MPKv80NBhuBOSGWbGZ8IhsFblFVuXkCzuqMJnhSyklBwLHXgHiRC7THnHri936h4NfAe14kvW+MMs8ol1/zcU9AT6LurPk/g1YZj9Dpz0rhm+GyfOgzDjCn7heNaoFVuPkCHZd2YT+pYSidrXtDh40+rcV3JZ+RQFvSXzwmx41rz1mOEgjx2nlw7bMid6Z7j+k10xcV0ALnpV6lBdjJ8arbP8JZ6tlSYgaZMrDD4+ME+8Iq+KhOryuT6CCklLEKhWGIpGxfWAa766bDT1ubdkavvD40yqD4rV6HyOTbPwkJLdcdCUb3HtWiBE7/mB7QPzA68zG3m9KaRlfs+PrWd+nUmYFIRjZCN8+kMVyHyq18O82VNkLnSoi9Ur/EIbgfz2dObqcPk0uYwnMO3m6S1WOWmdTlUmMWiHU/GjTnrCjuAC/DbFjpKVKB0woMuDJ4Qnv2f8FaW0PSyncQwgksw3clogLUMa9vysdIq3N6C+tZhlZseaD/LrKaMfVqIGLPAtqxyWMo3ikonLIC8kJjPZBIIjRO71Wv2ZEyBOiSBwQOA9tRtBAHtXG24P+StCOSmAVq0zpq8953Ypex2K+tyn5ym1TtGG0V2Nk4M84Wmlp0khk+HcybEfw4KF0YB2Sfkx4NKOlsZzE0DtGKdnVSx3W6vW/vhiRZaY6G+q2Nx7foHxfRxACNymY2TUst29k3u+IhWUxwQMsxKPmWdrRDkxgfa4ztrXussbv+V0DF67YORXtqpVguKXHi8CYYRq+pn6X2tcmBaOcSnzbVaMcRND7S4oaO4IEpCw7g3fhUN4useEEJxEcFR25iU/r7QCIZdhmmEWWW7cxrBrUsEXwsH2oJ5/N9+W+dLOIXxnhV8uG8bvZ9v6skosuAlcO0rxNoRs60FCbl/Vi5oMZVWPDlrlUBf//dHIz21ZNw82WVUEwq8DouohMIiFTTZJ4eQiYMaklNizO7Y0Kpiv81JTZcprOOLXjt8tpABhBSicrorwiZeahSBuVk+Dqb058E3ZOdJWAhhuMDUMlnl1jopNP3n68qKpT975cqZclpbrJqraykqz1rDSkeep1aC1dkTIGffXP/YXUWIrHLrtNBOpIHbZtKpfFvV/6fyuhKGsBe07NgGr6UmLvXqlw2Uds1ywVZX/vRE1BTf3HM1iHH/HVnohrDSYjmoJtdmyLtJBaV4lewbDyNLWTM6bN1ltX6ZMnJkocOsNAczt2MDBzPMVfadPdqEAh2uwsWV2uaAYh//dIXwe6bYY1aHnx+0RgWBTJNC1yPg1h6DltVkXAaN+UAlFeQ4trvOFX24EunwdqnIXPtm9CiWTEAHWmmnQMfeRkKAmSk0B1rKkBBdgA8dWAMddT5HIBPQwVC77gccvOFbixEKMI94zCj+PcFLQJ+O2yFaa3vHqkhg8QYaD4mAzhnYYWARcKRYAE3AknIojT4CEgFNIhHQJBIBTSIR0CQCmkQioEkkAppEIqBJJAKaRECTSAQ0iURAk0gENIlEQJMIaBKJgCaRCGgSiYAmkQhoEgFNIhHQJBIBTSIR0CQSAU0ioEkkAppEIqBJJAKaRCKgSQQ0iURAk0gENIlEQJNIBDSJgCaRCGgSiYAmkQhoUuvW/wMD7UB5QgnZsQAAAABJRU5ErkJggg==">
+  <link rel="icon" type="image/png" sizes="192x192" href="data:image/png;base64,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">
+  <title>Position Calculator</title>
+  <style>
+    :root {
+      --bg: #0b0d12;
+      --bg-elevated: rgba(11, 13, 18, 0.84);
+      --surface: #151821;
+      --surface-2: #1c202b;
+      --border: rgba(255, 255, 255, 0.08);
+      --border-strong: rgba(255, 255, 255, 0.14);
+      --text: #f4f6fa;
+      --muted: #8b93a7;
+      --mint: #5ee0a8;
+      --mint-dim: rgba(94, 224, 168, 0.14);
+      --coral: #ff7a7a;
+      --coral-dim: rgba(255, 122, 122, 0.14);
+      --amber: #ffc857;
+      --amber-dim: rgba(255, 200, 87, 0.12);
+      --blue: #7ab8ff;
+      --blue-dim: rgba(122, 184, 255, 0.16);
+      --error: #ff6b6b;
+      --error-dim: rgba(255, 107, 107, 0.12);
+      --safe-top: env(safe-area-inset-top, 0px);
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
+      --safe-left: env(safe-area-inset-left, 0px);
+      --safe-right: env(safe-area-inset-right, 0px);
+      --radius: 16px;
+      --tap: 52px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { background: var(--bg); color: var(--text); }
+    html { height: 100%; }
+    body {
+      min-height: 100%;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.4;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      padding-left: var(--safe-left);
+      padding-right: var(--safe-right);
+      padding-bottom: calc(var(--safe-bottom) + 28px);
+      overscroll-behavior-y: contain;
+      touch-action: manipulation;
+    }
+
+    button, input, select { font-family: inherit; color: inherit; }
+    button { -webkit-tap-highlight-color: transparent; }
+
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      padding: calc(var(--safe-top) + 12px) 20px 14px;
+      background: var(--bg-elevated);
+      -webkit-backdrop-filter: blur(20px) saturate(160%);
+      backdrop-filter: blur(20px) saturate(160%);
+      border-bottom: 1px solid var(--border);
+    }
+    .header h1 {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+    }
+    .header p {
+      margin-top: 2px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    main {
+      width: min(560px, 100%);
+      margin: 0 auto;
+      padding: 16px 16px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px;
+    }
+    .card h2 {
+      font-size: 12px;
+      font-weight: 650;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 14px;
+    }
+
+    .segment {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+      padding: 5px;
+      background: var(--bg);
+      border-radius: 14px;
+      margin-bottom: 14px;
+    }
+    .segment button {
+      border: 0;
+      background: transparent;
+      min-height: 44px;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: 650;
+      color: var(--muted);
+      cursor: pointer;
+    }
+    .segment button[aria-pressed="true"].long {
+      background: var(--mint-dim);
+      color: var(--mint);
+    }
+    .segment button[aria-pressed="true"].short {
+      background: var(--coral-dim);
+      color: var(--coral);
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .field { display: flex; flex-direction: column; gap: 6px; }
+    .field-span { grid-column: 1 / -1; }
+    .field label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--muted);
+    }
+    .field input, .field select {
+      width: 100%;
+      min-height: var(--tap);
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: var(--surface-2);
+      padding: 12px 14px;
+      font-size: 17px;
+      font-variant-numeric: tabular-nums;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+    .field select {
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path fill='%238b93a7' d='M1.1 1.2l4.9 5.2 4.9-5.2' stroke='none'/></svg>");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 38px;
+    }
+    .field input:focus, .field select:focus {
+      outline: none;
+      border-color: var(--mint);
+      box-shadow: 0 0 0 3px var(--mint-dim);
+    }
+    .field input.invalid {
+      border-color: var(--error);
+      box-shadow: 0 0 0 3px var(--error-dim);
+    }
+
+    .banner {
+      margin-top: 12px;
+      padding: 11px 12px;
+      border-radius: 12px;
+      font-size: 14px;
+      line-height: 1.45;
+    }
+    .banner + .banner { margin-top: 8px; }
+    .banner.error { background: var(--error-dim); color: #ff9a9a; }
+    .banner.warn { background: var(--amber-dim); color: var(--amber); }
+    .banner.note { background: var(--blue-dim); color: #c5dcff; }
+    .hidden { display: none !important; }
+
+    .hero {
+      text-align: center;
+      padding: 8px 0 14px;
+    }
+    .hero .shares {
+      font-size: 56px;
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      font-variant-numeric: tabular-nums;
+      line-height: 1;
+    }
+    .hero .shares-label {
+      margin-top: 4px;
+      font-size: 15px;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .rows { display: flex; flex-direction: column; }
+    .row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 12px;
+      padding: 10px 0;
+      border-top: 1px solid var(--border);
+      font-size: 15px;
+    }
+    .row .k { color: var(--muted); }
+    .row .v {
+      font-weight: 650;
+      font-variant-numeric: tabular-nums;
+      text-align: right;
+    }
+    .row .v .sub {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .zero-msg {
+      margin-top: 8px;
+      padding: 11px 12px;
+      border-radius: 12px;
+      background: var(--amber-dim);
+      color: var(--amber);
+      font-size: 14px;
+    }
+
+    .bars { display: flex; flex-direction: column; gap: 12px; margin: 4px 0 14px; }
+    .bar-block .bar-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 6px;
+      font-size: 14px;
+    }
+    .bar-block .bar-head .name { color: var(--muted); font-weight: 600; }
+    .bar-block .bar-head .pct {
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+    }
+    .track {
+      height: 10px;
+      border-radius: 99px;
+      background: var(--bg);
+      overflow: hidden;
+    }
+    .fill { height: 100%; border-radius: 99px; width: 0; transition: width 0.35s ease; }
+    .fill.target { background: var(--mint); }
+    .fill.stop { background: var(--coral); }
+    .fill.neither { background: #6b7388; }
+
+    .expectancy {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    .stat {
+      background: var(--bg);
+      border-radius: 12px;
+      padding: 12px;
+    }
+    .stat .lbl { font-size: 12px; color: var(--muted); font-weight: 600; }
+    .stat .val {
+      margin-top: 4px;
+      font-size: 20px;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      letter-spacing: -0.02em;
+    }
+    .stat .val.pos { color: var(--mint); }
+    .stat .val.neg { color: var(--coral); }
+
+    .hint, .disclaimer, .howto p, .howto li {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+    .hint { margin-bottom: 12px; }
+    .disclaimer { margin-top: 10px; }
+
+    .howto h2 { margin-bottom: 10px; }
+    .howto p { margin-bottom: 8px; }
+    .formula {
+      font-family: "SF Mono", ui-monospace, Menlo, Consolas, monospace;
+      font-size: 12.5px;
+      line-height: 1.55;
+      background: var(--bg);
+      border-radius: 12px;
+      padding: 12px 14px;
+      color: #d5dbe8;
+      margin: 8px 0;
+      overflow-wrap: anywhere;
+    }
+    .howto ul { padding-left: 18px; margin: 8px 0; }
+    .howto li { margin: 4px 0; }
+
+    .sim-status {
+      font-size: 12px;
+      color: var(--muted);
+      min-height: 16px;
+      margin-bottom: 8px;
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <h1>Position Calculator</h1>
+    <p>3:1 reward-to-risk · 2% risk · 25% cap</p>
+  </header>
+
+  <main>
+    <section class="card" aria-labelledby="inputs-title">
+      <h2 id="inputs-title">Inputs</h2>
+      <div class="segment" role="radiogroup" aria-label="Trade direction">
+        <button type="button" id="btn-long" class="long" role="radio" aria-pressed="true">Long</button>
+        <button type="button" id="btn-short" class="short" role="radio" aria-pressed="false">Short</button>
+      </div>
+      <div class="grid-2">
+        <div class="field field-span">
+          <label for="portfolio">Portfolio $</label>
+          <input id="portfolio" type="text" inputmode="decimal" enterkeyhint="done" autocomplete="off" autocorrect="off" spellcheck="false" value="8000">
+        </div>
+        <div class="field">
+          <label for="entry">Entry $</label>
+          <input id="entry" type="text" inputmode="decimal" enterkeyhint="done" autocomplete="off" autocorrect="off" spellcheck="false" value="40">
+        </div>
+        <div class="field">
+          <label for="stop">Stop $</label>
+          <input id="stop" type="text" inputmode="decimal" enterkeyhint="done" autocomplete="off" autocorrect="off" spellcheck="false" value="38">
+        </div>
+        <div class="field">
+          <label for="risk">Risk % (max 2.5)</label>
+          <input id="risk" type="text" inputmode="decimal" enterkeyhint="done" autocomplete="off" autocorrect="off" spellcheck="false" value="2">
+        </div>
+        <div class="field">
+          <label for="cap">Cap %</label>
+          <input id="cap" type="text" inputmode="decimal" enterkeyhint="done" autocomplete="off" autocorrect="off" spellcheck="false" value="25">
+        </div>
+      </div>
+      <div id="messages"></div>
+    </section>
+
+    <section class="card" id="position-card" aria-labelledby="position-title">
+      <h2 id="position-title">Position size</h2>
+      <div class="hero">
+        <div class="shares" id="out-shares">—</div>
+        <div class="shares-label" id="out-shares-label">shares</div>
+      </div>
+      <div class="rows">
+        <div class="row"><span class="k">3R target</span><span class="v" id="out-target">—</span></div>
+        <div class="row"><span class="k">Dollars at risk</span><span class="v" id="out-risk-dollars">—</span></div>
+        <div class="row"><span class="k">Profit at target</span><span class="v" id="out-profit">—</span></div>
+        <div class="row"><span class="k">Risk per share</span><span class="v" id="out-rps">—</span></div>
+        <div class="row"><span class="k">Risk budget</span><span class="v" id="out-budget">—</span></div>
+        <div class="row"><span class="k">Shares allowed by risk</span><span class="v" id="out-risk-shares">—</span></div>
+        <div class="row"><span class="k">Shares allowed by cap</span><span class="v" id="out-cap-shares">—</span></div>
+        <div class="row"><span class="k">Size set by</span><span class="v" id="out-limit">—</span></div>
+        <div class="row"><span class="k">Position value</span><span class="v" id="out-value">—</span></div>
+      </div>
+      <div id="zero-msg" class="zero-msg hidden"></div>
+    </section>
+
+    <section class="card" id="odds-card" aria-labelledby="odds-title">
+      <h2 id="odds-title">Odds of success</h2>
+      <div class="grid-2">
+        <div class="field field-span">
+          <label for="strategy">Strategy assumption</label>
+          <select id="strategy">
+            <option value="no-edge">No edge (random market)</option>
+            <option value="edge">Strategy with an expected edge</option>
+            <option value="winrate">My backtested win rate</option>
+          </select>
+        </div>
+        <div class="field field-span hidden" id="field-edge">
+          <label for="edge">Expected edge % per year in your favor</label>
+          <input id="edge" type="text" inputmode="decimal" enterkeyhint="done" autocomplete="off" autocorrect="off" spellcheck="false" value="10">
+        </div>
+        <div class="field field-span hidden" id="field-winrate">
+          <label for="winrate">Backtested win rate %</label>
+          <input id="winrate" type="text" inputmode="decimal" enterkeyhint="done" autocomplete="off" autocorrect="off" spellcheck="false" value="35">
+        </div>
+        <div class="field field-span" id="field-timeframe">
+          <label for="timeframe">Time frame</label>
+          <select id="timeframe">
+            <option value="5">1 week (5 trading days)</option>
+            <option value="10">2 weeks (10 trading days)</option>
+            <option value="21" selected>1 month (21 trading days)</option>
+            <option value="63">3 months (63 trading days)</option>
+            <option value="126">6 months (126 trading days)</option>
+            <option value="252">1 year (252 trading days)</option>
+          </select>
+        </div>
+        <div class="field field-span" id="field-vol">
+          <label for="vol">Annual volatility %</label>
+          <input id="vol" type="text" inputmode="decimal" enterkeyhint="done" autocomplete="off" autocorrect="off" spellcheck="false" value="35">
+        </div>
+      </div>
+      <div class="sim-status" id="sim-status"></div>
+      <div id="odds-body">
+        <div class="bars">
+          <div class="bar-block">
+            <div class="bar-head"><span class="name">Hit target</span><span class="pct" id="pct-target">—</span></div>
+            <div class="track"><div class="fill target" id="bar-target"></div></div>
+          </div>
+          <div class="bar-block">
+            <div class="bar-head"><span class="name">Hit stop</span><span class="pct" id="pct-stop">—</span></div>
+            <div class="track"><div class="fill stop" id="bar-stop"></div></div>
+          </div>
+          <div class="bar-block">
+            <div class="bar-head"><span class="name">Neither</span><span class="pct" id="pct-neither">—</span></div>
+            <div class="track"><div class="fill neither" id="bar-neither"></div></div>
+          </div>
+        </div>
+        <div class="expectancy">
+          <div class="stat">
+            <div class="lbl">Expectancy</div>
+            <div class="val" id="out-exp-r">—</div>
+          </div>
+          <div class="stat">
+            <div class="lbl">In dollars</div>
+            <div class="val" id="out-exp-usd">—</div>
+          </div>
+        </div>
+        <p class="hint">The break-even win rate at 3:1 is 25%.</p>
+        <p class="disclaimer">The odds are estimates from a simple model that ignores gaps, news, and intraday touches. They are not predictions.</p>
+      </div>
+    </section>
+
+    <section class="card howto" aria-labelledby="howto-title">
+      <h2 id="howto-title">How it’s calculated</h2>
+      <p>The stop is chosen first. Share count comes from the stop, not the other way around. The target must be at least 3× the distance from entry to stop.</p>
+      <div class="formula">
+        Risk $ = Portfolio × Risk %<br>
+        Risk per share = |Entry − Stop|<br>
+        Risk shares = floor(Risk $ ÷ Risk per share)<br>
+        Cap shares = floor(Portfolio × Cap % ÷ Entry)<br>
+        Shares = min(Risk shares, Cap shares)
+      </div>
+      <div class="formula">
+        Long target = Entry + 3 × (Entry − Stop)<br>
+        Short target = Entry − 3 × (Stop − Entry)
+      </div>
+      <p>Risk defaults to 2% of the portfolio and is hard-capped at 2.5%, leaving a little room for slippage. No single position can be worth more than the cap (25% by default). When the cap binds, you risk less than 2%.</p>
+      <p>For “no edge” and “expected edge,” odds come from 4,000 seeded Monte Carlo paths of geometric Brownian motion, checked at daily closes:</p>
+      <div class="formula">
+        sd = vol ÷ √252<br>
+        drift = +edge (long) or −edge (short)<br>
+        mu = drift ÷ 252 − 0.5 × sd²<br>
+        S ← S × exp(mu + sd × Z)
+      </div>
+      <p>Each path is counted as target-first, stop-first, or neither by the end of the time frame. For a backtested win rate, hit target = win rate and hit stop = 1 − win rate.</p>
+      <div class="formula">
+        Expectancy (R) = 3 × P(target) − P(stop)<br>
+        Expectancy ($) = Expectancy (R) × Dollars at risk
+      </div>
+    </section>
+  </main>
+
+  <script>
+  /* --- core math begin --- */
+  var RISK_CEILING = 2.5;
+  var REWARD_R = 3;
+  var MC_PATHS = 4000;
+  var TRADING_DAYS_YEAR = 252;
+
+  function parseNum(raw) {
+    if (raw == null) return NaN;
+    var s = String(raw).trim().replace(/,/g, "").replace(/%/g, "");
+    if (s === "" || s === "." || s === "-" || s === "+" || s === "-." || s === "+.") return NaN;
+    var n = Number(s);
+    return Number.isFinite(n) ? n : NaN;
+  }
+
+  function clampRiskPct(riskPct) {
+    return Math.min(riskPct, RISK_CEILING);
+  }
+
+  function computePosition(side, portfolio, entry, stop, riskPct, capPct) {
+    var errors = [];
+    var isLong = side === "long";
+    if (!(portfolio > 0)) errors.push("Enter a portfolio greater than 0.");
+    if (!(entry > 0)) errors.push("Enter an entry price greater than 0.");
+    if (!(stop > 0)) errors.push("Enter a stop price greater than 0.");
+    if (!(riskPct > 0)) errors.push("Enter a risk % greater than 0.");
+    if (!(capPct > 0)) errors.push("Enter a cap % greater than 0.");
+    if (entry > 0 && stop > 0) {
+      if (isLong && stop >= entry) errors.push("Stop must be below the entry for a long.");
+      if (!isLong && stop <= entry) errors.push("Stop must be above the entry for a short.");
+    }
+    if (errors.length) return { ok: false, errors: errors };
+
+    var usedRiskPct = clampRiskPct(riskPct);
+    var clamped = riskPct > RISK_CEILING;
+    var riskPerShare = Math.abs(entry - stop);
+    var riskBudget = portfolio * (usedRiskPct / 100);
+    var riskShares = Math.floor(riskBudget / riskPerShare);
+    var capShares = Math.floor((portfolio * (capPct / 100)) / entry);
+    var shares = Math.min(riskShares, capShares);
+    var target = isLong
+      ? entry + REWARD_R * (entry - stop)
+      : entry - REWARD_R * (stop - entry);
+    var dollarsAtRisk = shares * riskPerShare;
+    var profitAtTarget = shares * Math.abs(target - entry);
+    var positionValue = shares * entry;
+    var limit;
+    if (shares === 0) limit = "None — 0 shares fit";
+    else if (riskShares === capShares) limit = "Risk and cap (tie)";
+    else if (riskShares < capShares) limit = "Risk budget";
+    else limit = "Position cap";
+
+    return {
+      ok: true,
+      errors: [],
+      side: side,
+      isLong: isLong,
+      portfolio: portfolio,
+      entry: entry,
+      stop: stop,
+      riskPct: riskPct,
+      usedRiskPct: usedRiskPct,
+      clamped: clamped,
+      capPct: capPct,
+      riskPerShare: riskPerShare,
+      riskBudget: riskBudget,
+      riskShares: riskShares,
+      capShares: capShares,
+      shares: shares,
+      target: target,
+      dollarsAtRisk: dollarsAtRisk,
+      dollarsAtRiskPct: portfolio ? (dollarsAtRisk / portfolio) * 100 : 0,
+      profitAtTarget: profitAtTarget,
+      positionValue: positionValue,
+      positionValuePct: portfolio ? (positionValue / portfolio) * 100 : 0,
+      limit: limit
+    };
+  }
+
+  function hashSeed(str) {
+    var h = 2166136261;
+    for (var i = 0; i < str.length; i++) {
+      h ^= str.charCodeAt(i);
+      h = Math.imul(h, 16777619);
+    }
+    return h >>> 0;
+  }
+
+  function mulberry32(a) {
+    return function () {
+      a |= 0;
+      a = a + 0x6D2B79F5 | 0;
+      var t = Math.imul(a ^ a >>> 15, 1 | a);
+      t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+      return ((t ^ t >>> 14) >>> 0) / 4294967296;
+    };
+  }
+
+  function gaussian(rng) {
+    var u1 = rng();
+    var u2 = rng();
+    if (u1 < 1e-12) u1 = 1e-12;
+    return Math.sqrt(-2 * Math.log(u1)) * Math.cos(2 * Math.PI * u2);
+  }
+
+  function simulateOdds(entry, stop, target, days, volPct, edgePct, isLong, paths) {
+    paths = paths == null ? MC_PATHS : paths;
+    var vol = volPct / 100;
+    var edge = edgePct / 100;
+    var sd = vol / Math.sqrt(TRADING_DAYS_YEAR);
+    var drift = isLong ? edge : -edge;
+    var mu = drift / TRADING_DAYS_YEAR - 0.5 * sd * sd;
+    var seed = hashSeed([entry, stop, target, days, volPct, edgePct, isLong ? 1 : 0, paths].join("|"));
+    var rng = mulberry32(seed);
+    var targetFirst = 0, stopFirst = 0, neither = 0;
+    for (var i = 0; i < paths; i++) {
+      var s = entry;
+      var hit = null;
+      for (var d = 0; d < days; d++) {
+        var prev = s;
+        s = s * Math.exp(mu + sd * gaussian(rng));
+        var hitStop = isLong ? s <= stop : s >= stop;
+        var hitTarget = isLong ? s >= target : s <= target;
+        if (hitStop && hitTarget) {
+          hit = Math.abs(prev - stop) <= Math.abs(prev - target) ? "stop" : "target";
+          break;
+        } else if (hitStop) {
+          hit = "stop";
+          break;
+        } else if (hitTarget) {
+          hit = "target";
+          break;
+        }
+      }
+      if (hit === "target") targetFirst++;
+      else if (hit === "stop") stopFirst++;
+      else neither++;
+    }
+    return {
+      win: targetFirst / paths,
+      loss: stopFirst / paths,
+      neither: neither / paths
+    };
+  }
+
+  function winRateOdds(winRatePct) {
+    var wr = winRatePct / 100;
+    return { win: wr, loss: 1 - wr, neither: 0 };
+  }
+
+  function expectancyR(win, loss) {
+    return win * REWARD_R - loss;
+  }
+  /* --- core math end --- */
+
+  var STORAGE_KEY = "poscalc-v1";
+  var DEFAULTS = {
+    side: "long",
+    portfolio: "8000",
+    entry: "40",
+    stop: "38",
+    risk: "2",
+    cap: "25",
+    strategy: "no-edge",
+    edge: "10",
+    winrate: "35",
+    timeframe: "21",
+    vol: "35"
+  };
+
+  var els = {};
+  var side = "long";
+  var simTimer = null;
+  var simToken = 0;
+  var lastPos = null;
+
+  var moneyFmt = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" });
+  var intFmt = new Intl.NumberFormat("en-US", { maximumFractionDigits: 0 });
+  var pctFmt = function (n, d) {
+    d = d == null ? 2 : d;
+    return n.toFixed(d) + "%";
+  };
+
+  function formatMoney(n) {
+    if (!Number.isFinite(n)) return "—";
+    return moneyFmt.format(n);
+  }
+
+  function formatShares(n) {
+    if (!Number.isFinite(n)) return "—";
+    return intFmt.format(n);
+  }
+
+  function formatPx(n) {
+    if (!Number.isFinite(n)) return "—";
+    var abs = Math.abs(n);
+    var digits = abs >= 1 ? 2 : abs >= 0.01 ? 4 : 6;
+    return new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD",
+      minimumFractionDigits: digits,
+      maximumFractionDigits: digits
+    }).format(n);
+  }
+
+  function formatR(n) {
+    if (!Number.isFinite(n)) return "—";
+    var sign = n > 0 ? "+" : n < 0 ? "−" : "";
+    return sign + Math.abs(n).toFixed(2) + " R";
+  }
+
+  function $(id) { return document.getElementById(id); }
+
+  function loadState() {
+    var state = Object.assign({}, DEFAULTS);
+    try {
+      var raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) {
+        var saved = JSON.parse(raw);
+        Object.keys(DEFAULTS).forEach(function (k) {
+          if (saved[k] != null && saved[k] !== "") state[k] = String(saved[k]);
+        });
+      }
+    } catch (e) { /* ignore */ }
+    return state;
+  }
+
+  function saveState() {
+    var state = {
+      side: side,
+      portfolio: els.portfolio.value,
+      entry: els.entry.value,
+      stop: els.stop.value,
+      risk: els.risk.value,
+      cap: els.cap.value,
+      strategy: els.strategy.value,
+      edge: els.edge.value,
+      winrate: els.winrate.value,
+      timeframe: els.timeframe.value,
+      vol: els.vol.value
+    };
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (e) { /* ignore */ }
+  }
+
+  function setSide(next, persist) {
+    side = next === "short" ? "short" : "long";
+    els.btnLong.setAttribute("aria-pressed", side === "long" ? "true" : "false");
+    els.btnShort.setAttribute("aria-pressed", side === "short" ? "true" : "false");
+    if (persist !== false) {
+      saveState();
+      recalc();
+    }
+  }
+
+  function syncStrategyFields() {
+    var mode = els.strategy.value;
+    els.fieldEdge.classList.toggle("hidden", mode !== "edge");
+    els.fieldWinrate.classList.toggle("hidden", mode !== "winrate");
+    els.fieldTimeframe.classList.toggle("hidden", mode === "winrate");
+    els.fieldVol.classList.toggle("hidden", mode === "winrate");
+  }
+
+  function setMessages(errors, clamped, capNote) {
+    var box = els.messages;
+    box.innerHTML = "";
+    errors.forEach(function (msg) {
+      var d = document.createElement("div");
+      d.className = "banner error";
+      d.textContent = msg;
+      box.appendChild(d);
+    });
+    if (clamped) {
+      var w = document.createElement("div");
+      w.className = "banner warn";
+      w.textContent = "Risk is capped at 2.5%. Sizing uses 2.5%, not the value you entered.";
+      box.appendChild(w);
+    }
+    if (capNote) {
+      var n = document.createElement("div");
+      n.className = "banner note";
+      n.textContent = capNote;
+      box.appendChild(n);
+    }
+  }
+
+  function clearPositionOutputs() {
+    els.outShares.textContent = "—";
+    els.outTarget.textContent = "—";
+    els.outRiskDollars.innerHTML = "—";
+    els.outProfit.textContent = "—";
+    els.outRps.textContent = "—";
+    els.outBudget.textContent = "—";
+    els.outRiskShares.textContent = "—";
+    els.outCapShares.textContent = "—";
+    els.outLimit.textContent = "—";
+    els.outValue.innerHTML = "—";
+    els.zeroMsg.classList.add("hidden");
+  }
+
+  function clearOdds() {
+    els.pctTarget.textContent = "—";
+    els.pctStop.textContent = "—";
+    els.pctNeither.textContent = "—";
+    els.barTarget.style.width = "0";
+    els.barStop.style.width = "0";
+    els.barNeither.style.width = "0";
+    els.outExpR.textContent = "—";
+    els.outExpR.className = "val";
+    els.outExpUsd.textContent = "—";
+    els.outExpUsd.className = "val";
+  }
+
+  function renderOdds(odds, dollarsAtRisk) {
+    var winPct = odds.win * 100;
+    var lossPct = odds.loss * 100;
+    var neitherPct = odds.neither * 100;
+    els.pctTarget.textContent = pctFmt(winPct, 1);
+    els.pctStop.textContent = pctFmt(lossPct, 1);
+    els.pctNeither.textContent = pctFmt(neitherPct, 1);
+    els.barTarget.style.width = Math.max(0, Math.min(100, winPct)) + "%";
+    els.barStop.style.width = Math.max(0, Math.min(100, lossPct)) + "%";
+    els.barNeither.style.width = Math.max(0, Math.min(100, neitherPct)) + "%";
+    var expR = expectancyR(odds.win, odds.loss);
+    var expUsd = expR * dollarsAtRisk;
+    els.outExpR.textContent = formatR(expR);
+    els.outExpUsd.textContent = (expUsd > 0 ? "+" : expUsd < 0 ? "−" : "") + formatMoney(Math.abs(expUsd));
+    els.outExpR.className = "val" + (expR > 0 ? " pos" : expR < 0 ? " neg" : "");
+    els.outExpUsd.className = "val" + (expUsd > 0 ? " pos" : expUsd < 0 ? " neg" : "");
+  }
+
+  function updateStrategyOdds(pos) {
+    var mode = els.strategy.value;
+    if (mode === "winrate") {
+      var wr = parseNum(els.winrate.value);
+      if (!(wr >= 0) || wr > 100) {
+        els.simStatus.textContent = "Enter a win rate between 0 and 100.";
+        clearOdds();
+        return;
+      }
+      els.simStatus.textContent = "";
+      renderOdds(winRateOdds(wr), pos.dollarsAtRisk);
+      return;
+    }
+
+    var vol = parseNum(els.vol.value);
+    var days = parseInt(els.timeframe.value, 10);
+    var edge = 0;
+    if (mode === "edge") {
+      edge = parseNum(els.edge.value);
+      if (!Number.isFinite(edge)) {
+        els.simStatus.textContent = "Enter an expected annual edge %.";
+        clearOdds();
+        return;
+      }
+    }
+    if (!(vol > 0)) {
+      els.simStatus.textContent = "Enter an annual volatility % greater than 0.";
+      clearOdds();
+      return;
+    }
+    if (!(days > 0)) {
+      els.simStatus.textContent = "Choose a time frame.";
+      clearOdds();
+      return;
+    }
+
+    simToken += 1;
+    var token = simToken;
+    els.simStatus.textContent = "Simulating…";
+    if (simTimer) clearTimeout(simTimer);
+    simTimer = setTimeout(function () {
+      simTimer = null;
+      if (token !== simToken) return;
+      var odds = simulateOdds(pos.entry, pos.stop, pos.target, days, vol, mode === "edge" ? edge : 0, pos.isLong, MC_PATHS);
+      if (token !== simToken) return;
+      els.simStatus.textContent = "4,000 simulated paths · daily closes";
+      renderOdds(odds, pos.dollarsAtRisk);
+    }, 280);
+  }
+
+  function recalc() {
+    var portfolio = parseNum(els.portfolio.value);
+    var entry = parseNum(els.entry.value);
+    var stop = parseNum(els.stop.value);
+    var risk = parseNum(els.risk.value);
+    var cap = parseNum(els.cap.value);
+
+    ["portfolio", "entry", "stop", "risk", "cap"].forEach(function (id) {
+      var empty = String(els[id].value).trim() === "";
+      var val = parseNum(els[id].value);
+      var invalid = empty || !Number.isFinite(val);
+      if (id === "portfolio" || id === "entry" || id === "stop" || id === "risk" || id === "cap") {
+        if (!invalid && val <= 0) invalid = true;
+      }
+      if (id === "stop" && !invalid && entry > 0 && stop > 0) {
+        if (side === "long" && stop >= entry) invalid = true;
+        if (side === "short" && stop <= entry) invalid = true;
+      }
+      els[id].classList.toggle("invalid", invalid);
+    });
+
+    var pos = computePosition(side, portfolio, entry, stop, risk, cap);
+    lastPos = pos.ok ? pos : null;
+
+    if (!pos.ok) {
+      var emptyErrors = [];
+      if (String(els.portfolio.value).trim() === "" || String(els.entry.value).trim() === "" || String(els.stop.value).trim() === "" || String(els.risk.value).trim() === "" || String(els.cap.value).trim() === "") {
+        emptyErrors.push("Fill in every field with a valid number.");
+      }
+      var shown = pos.errors.slice();
+      if (emptyErrors.length && shown.length === 0) shown = emptyErrors;
+      setMessages(shown, false, null);
+      clearPositionOutputs();
+      if (simTimer) { clearTimeout(simTimer); simTimer = null; }
+      simToken += 1;
+      els.simStatus.textContent = "";
+      clearOdds();
+      return;
+    }
+
+    var capNote = null;
+    if (pos.shares > 0 && pos.capShares < pos.riskShares) {
+      capNote = "The position cap limited this trade, so dollars at risk are below the risk budget.";
+    }
+    setMessages([], pos.clamped, capNote);
+
+    els.outShares.textContent = formatShares(pos.shares);
+    els.outSharesLabel.textContent = pos.shares === 1 ? "share" : "shares";
+    els.outTarget.textContent = formatPx(pos.target);
+    els.outRiskDollars.innerHTML = formatMoney(pos.dollarsAtRisk) + '<span class="sub">' + pctFmt(pos.dollarsAtRiskPct, 2) + " of portfolio</span>";
+    els.outProfit.textContent = formatMoney(pos.profitAtTarget);
+    els.outRps.textContent = formatPx(pos.riskPerShare);
+    els.outBudget.textContent = formatMoney(pos.riskBudget) + "  (" + pctFmt(pos.usedRiskPct, 2) + ")";
+    els.outRiskShares.textContent = formatShares(pos.riskShares);
+    els.outCapShares.textContent = formatShares(pos.capShares);
+    els.outLimit.textContent = pos.limit;
+    els.outValue.innerHTML = formatMoney(pos.positionValue) + '<span class="sub">' + pctFmt(pos.positionValuePct, 2) + " of portfolio</span>";
+
+    if (pos.shares === 0) {
+      els.zeroMsg.textContent = "No shares fit these inputs. Widen the stop, raise the risk budget or cap, or increase the portfolio.";
+      els.zeroMsg.classList.remove("hidden");
+    } else {
+      els.zeroMsg.classList.add("hidden");
+    }
+
+    updateStrategyOdds(pos);
+  }
+
+  function onInput() {
+    saveState();
+    recalc();
+  }
+
+  function bind() {
+    els.btnLong = $("btn-long");
+    els.btnShort = $("btn-short");
+    els.portfolio = $("portfolio");
+    els.entry = $("entry");
+    els.stop = $("stop");
+    els.risk = $("risk");
+    els.cap = $("cap");
+    els.messages = $("messages");
+    els.outShares = $("out-shares");
+    els.outSharesLabel = $("out-shares-label");
+    els.outTarget = $("out-target");
+    els.outRiskDollars = $("out-risk-dollars");
+    els.outProfit = $("out-profit");
+    els.outRps = $("out-rps");
+    els.outBudget = $("out-budget");
+    els.outRiskShares = $("out-risk-shares");
+    els.outCapShares = $("out-cap-shares");
+    els.outLimit = $("out-limit");
+    els.outValue = $("out-value");
+    els.zeroMsg = $("zero-msg");
+    els.strategy = $("strategy");
+    els.edge = $("edge");
+    els.winrate = $("winrate");
+    els.timeframe = $("timeframe");
+    els.vol = $("vol");
+    els.fieldEdge = $("field-edge");
+    els.fieldWinrate = $("field-winrate");
+    els.fieldTimeframe = $("field-timeframe");
+    els.fieldVol = $("field-vol");
+    els.simStatus = $("sim-status");
+    els.pctTarget = $("pct-target");
+    els.pctStop = $("pct-stop");
+    els.pctNeither = $("pct-neither");
+    els.barTarget = $("bar-target");
+    els.barStop = $("bar-stop");
+    els.barNeither = $("bar-neither");
+    els.outExpR = $("out-exp-r");
+    els.outExpUsd = $("out-exp-usd");
+
+    var state = loadState();
+    els.portfolio.value = state.portfolio;
+    els.entry.value = state.entry;
+    els.stop.value = state.stop;
+    els.risk.value = state.risk;
+    els.cap.value = state.cap;
+    els.strategy.value = state.strategy;
+    els.edge.value = state.edge;
+    els.winrate.value = state.winrate;
+    els.timeframe.value = state.timeframe;
+    els.vol.value = state.vol;
+    setSide(state.side, false);
+    syncStrategyFields();
+
+    els.btnLong.addEventListener("click", function () { setSide("long"); });
+    els.btnShort.addEventListener("click", function () { setSide("short"); });
+
+    ["portfolio", "entry", "stop", "risk", "cap", "edge", "winrate", "vol"].forEach(function (id) {
+      els[id].addEventListener("input", onInput);
+    });
+    els.strategy.addEventListener("change", function () {
+      syncStrategyFields();
+      onInput();
+    });
+    els.timeframe.addEventListener("change", onInput);
+
+    recalc();
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", bind);
+  } else {
+    bind();
+  }
+
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", function () {
+      navigator.serviceWorker.register("./sw.js");
+    });
+  }
+  </script>
+</body>
+</html>
